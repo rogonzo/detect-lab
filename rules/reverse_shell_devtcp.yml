@@ -1,0 +1,24 @@
+title: Bash Reverse Shell via /dev/tcp
+id: 1a2b3c4d-0003-4000-8000-000000000003
+status: experimental
+description: Detects bash process command lines using /dev/tcp for outbound connections, a common reverse-shell technique.
+author: rogonzo
+date: 2026/11/22
+tags:
+  - attack.execution
+  - attack.t1059.004
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  selection:
+    Image|endswith: '/bash'
+    CommandLine|contains: '/dev/tcp/'
+  condition: selection
+fields:
+  - CommandLine
+  - User
+  - ParentImage
+falsepositives:
+  - Legitimate admin scripts using /dev/tcp for connectivity checks
+level: high
