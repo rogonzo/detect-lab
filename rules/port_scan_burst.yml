@@ -1,0 +1,23 @@
+title: Port Scan Connection Burst
+id: 1a2b3c4d-0002-4000-8000-000000000002
+status: experimental
+description: Detects a single source making connection attempts to many distinct destination ports in a short window, indicative of port scanning (e.g. netrecon).
+author: rogonzo
+date: 2026/11/22
+tags:
+  - attack.discovery
+  - attack.t1046
+logsource:
+  category: firewall
+detection:
+  selection:
+    action: blocked
+  timeframe: 1m
+  condition: selection | count(dst_port) by src_ip > 20
+fields:
+  - src_ip
+  - dst_port
+falsepositives:
+  - Authorized vulnerability scanning
+  - Load balancers health-checking many backends
+level: medium
