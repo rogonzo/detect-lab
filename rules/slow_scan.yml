@@ -1,0 +1,23 @@
+title: Slow Port Scan (Low Rate, High Total)
+id: 1a2b3c4d-0006-4000-8000-000000000006
+status: experimental
+description: Detects slow, throttled port scans that evade short-window rate detection by touching many distinct destination ports over a longer period.
+author: rogonzo
+date: 2026/11/25
+tags:
+  - attack.discovery
+  - attack.t1046
+logsource:
+  category: firewall
+detection:
+  selection:
+    action: blocked
+  timeframe: 10m
+  condition: selection | count(dst_port) by src_ip > 50
+fields:
+  - src_ip
+  - dst_port
+falsepositives:
+  - Authorized slow vulnerability scans
+  - Distributed monitoring from a single collector
+level: medium
