@@ -1,0 +1,30 @@
+title: Remote Script Execution via curl pipe bash
+id: 1a2b3c4d-0005-4000-8000-000000000005
+status: experimental
+description: Detects curl or wget piping directly to a shell interpreter, a common initial-access and post-exploitation technique.
+author: rogonzo
+date: 2026/11/25
+tags:
+  - attack.execution
+  - attack.t1059.004
+  - attack.t1105
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  selection:
+    CommandLine|contains:
+      - 'curl'
+      - 'wget'
+    CommandLine|contains|all:
+      - '|'
+      - 'bash'
+  condition: selection
+fields:
+  - CommandLine
+  - User
+  - ParentImage
+falsepositives:
+  - Legitimate install scripts fetched and piped in automation pipelines
+  - Container entrypoints that fetch setup scripts
+level: high
