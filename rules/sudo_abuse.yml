@@ -1,0 +1,26 @@
+title: Sudo Privilege Escalation Attempt
+id: 1a2b3c4d-0004-4000-8000-000000000004
+status: experimental
+description: Detects repeated failed sudo attempts followed by success, or sudo usage by an unexpected user, indicative of privilege escalation attempts.
+author: rogonzo
+date: 2026/11/25
+tags:
+  - attack.privilege_escalation
+  - attack.t1548.003
+logsource:
+  product: linux
+  service: sudo
+detection:
+  selection_fail:
+    message|contains: 'incorrect password'
+  selection_success:
+    message|contains: 'COMMAND='
+  timeframe: 10m
+  condition: selection_fail | count() by user > 3
+fields:
+  - user
+  - command
+falsepositives:
+  - User genuinely forgot sudo password and retried
+  - Automated scripts with stale credentials
+level: medium
