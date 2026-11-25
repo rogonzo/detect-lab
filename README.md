@@ -12,6 +12,7 @@ MITRE ATT&CK with a documented test case.
 | `reverse_shell_devtcp.yml` | T1059.004 | Bash reverse shell via `/dev/tcp` |
 | `sudo_abuse.yml` | T1548.003 | Repeated failed sudo attempts from a single user |
 | `curl_pipe_bash.yml` | T1059.004 / T1105 | Remote script execution via `curl`/`wget` piped to bash |
+| `slow_scan.yml` | T1046 | Low-rate, high-total port scan (evades `port_scan_burst`) |
 
 ## Structure
 rules/       # Sigma rule files (YAML)
