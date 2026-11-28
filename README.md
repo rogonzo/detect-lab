@@ -14,6 +14,14 @@ MITRE ATT&CK with a documented test case.
 | `curl_pipe_bash.yml` | T1059.004 / T1105 | Remote script execution via `curl`/`wget` piped to bash |
 | `slow_scan.yml` | T1046 | Low-rate, high-total port scan (evades `port_scan_burst`) |
 
+## Proof
+
+![detection proof](screenshots/detect-lab-proof.png)
+
+Each rule ships with a sample log in `tests/` and a validation command in its
+doc. The screenshot above shows the match counts for three rules, all above
+their firing thresholds.
+
 ## Structure
 rules/       # Sigma rule files (YAML)
 docs/        # One markdown per rule: rationale, FP notes, test steps
