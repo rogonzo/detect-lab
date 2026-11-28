@@ -1,0 +1,6 @@
+Nov 25 13:00:01 lab sudo: pam_unix(sudo:auth): authentication failure; logname=alice uid=1000 euid=0 tty=/dev/pts/0 ruser=alice rhost= user=alice
+Nov 25 13:00:05 lab sudo: pam_unix(sudo:auth): authentication failure; logname=alice uid=1000 euid=0 tty=/dev/pts/0 ruser=alice rhost= user=alice
+Nov 25 13:00:09 lab sudo: pam_unix(sudo:auth): authentication failure; logname=alice uid=1000 euid=0 tty=/dev/pts/0 ruser=alice rhost= user=alice
+Nov 25 13:00:13 lab sudo: pam_unix(sudo:auth): authentication failure; logname=alice uid=1000 euid=0 tty=/dev/pts/0 ruser=alice rhost= user=alice
+Nov 25 13:00:17 lab sudo: pam_unix(sudo:auth): authentication failure; logname=alice uid=1000 euid=0 tty=/dev/pts/0 ruser=alice rhost= user=alice
+Nov 25 13:00:21 lab sudo: alice : TTY=/dev/pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/id
