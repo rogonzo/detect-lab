@@ -33,6 +33,8 @@ Rule condition: `Image endswith /bash` AND `CommandLine contains /dev/tcp/`.
 Validate locally:
 
 ```bash
-grep '/dev/tcp/' tests/reverse_shell_devtcp_sample.log | \
-  grep -c 'bash'
-# expected: 2  (the shell + the connectivity check, both use bash+/dev/tcp)
+grep '/dev/tcp/' tests/reverse_shell_devtcp_sample.log | grep -c 'bash'
+# expected: 1  (only the reverse shell line has bash + /dev/tcp)
+
+grep -c '/dev/tcp/' tests/reverse_shell_devtcp_sample.log
+# expected: 2  (one bash shell, one benign sh connectivity check)
