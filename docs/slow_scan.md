@@ -39,3 +39,28 @@ ATT&CK
 Technique: T1046 — Network Service Discovery
 
 Tactic: Discovery
+
+## Proof / validation
+
+Sample log: [`tests/slow_scan_sample.log`](../tests/slow_scan_sample.log)
+
+60 `ufw-block` lines from one source (`192.168.1.10`) across 60 distinct
+destination ports, spread over ~9 minutes (one every 9 seconds).
+
+This is the evasion case from [write-up #003](../../purple-writeups/writeups/003-slow-scan-evasion/):
+too slow to trip `port_scan_burst` (>20 in 1m), but total distinct ports
+still far exceeds `slow_scan`'s `>50 in 10m`.
+
+Validate locally:
+
+```bash
+grep 'ufw-block' tests/slow_scan_sample.log | \
+  awk '{print $NF}' | sort -u | wc -l
+# expected: 60  (threshold 50 → fires)
+
+# And confirm port_scan_burst would NOT fire: max ports in any 1-minute window
+grep 'ufw-block' tests/slow_scan_sample.log | \
+  awk '{print $3}' | cut -d: -f1-2 | sort | uniq -c | sort -nr | head -1
+# expected: ~7 per minute  (below 20 → port_scan_burst misses it)
+That contrast — slow_scan fires, port_scan_burst does not — is the proof
+that the two rules are complementary, not redundant
