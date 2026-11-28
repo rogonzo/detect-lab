@@ -12,7 +12,7 @@ logsource:
   service: sudo
 detection:
   selection_fail:
-    message|contains: 'incorrect password'
+        message|contains: 'authentication failure'
   selection_success:
     message|contains: 'COMMAND='
   timeframe: 10m
