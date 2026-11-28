@@ -38,3 +38,19 @@ Technique: T1059.004 — Command and Scripting Interpreter: Unix Shell
 Technique: T1105 — Ingress Tool Transfer
 
 Tactic: Execution
+
+## Proof / validation
+
+Sample log: [`tests/curl_pipe_bash_sample.log`](../tests/curl_pipe_bash_sample.log)
+
+Three EXECVE events: `curl | bash`, `wget | bash`, and `curl | jq`
+(benign — fetched but not piped to a shell).
+
+Rule condition: `CommandLine contains curl|wget` AND `contains |` AND
+`contains bash`. → The first two match, the third does not → **rule fires twice**.
+
+Validate locally:
+
+```bash
+grep -E '(curl|wget).*\|.*bash' tests/curl_pipe_bash_sample.log | wc -l
+# expected: 2
