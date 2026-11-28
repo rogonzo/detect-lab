@@ -23,13 +23,17 @@ done
 
 Sample log: [`tests/sudo_abuse_sample.log`](../tests/sudo_abuse_sample.log)
 
-Five `incorrect password` failures from `alice` within 20 seconds, followed
+Five `authentication failure` lines from `alice` within 20 seconds, followed
 by one successful sudo command.
 
 Rule condition: `selection_fail | count() by user > 3` over `10m`.
 5 failures > 3 → **rule fires** for user `alice`.
 
 Validate locally:
+
+```bash
+grep -c 'authentication failure' tests/sudo_abuse_sample.log
+# expected: 5  (threshold 3 → fires)
 
 ```bash
 grep -c 'incorrect password' tests/sudo_abuse_sample.log
